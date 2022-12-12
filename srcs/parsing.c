@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 14:33:45 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/12 16:05:04 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ int	init_cmd(t_cmd *args)
 	args->s = readline("\x1b[30m\x1b[46m☠️  MINISHELL ☠️ \x1b[m ");
 	if (!args->s)
 		return (0);
-	if (args->s && *args->s)
-		add_history(args->s);
-	else
-		return (1);
 	args->cmd = quote_validator(args, 0, 0);
+	if (args->cmd && *args->cmd)
+		add_history(args->s);
+	else if (!args->s)
+		return (1);
 	if (!args->cmd)
 	{
 		ft_putstr_fd("minishell: Error: invalid quotes\n", 2);

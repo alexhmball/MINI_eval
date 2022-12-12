@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setting_up_fds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/11 10:33:04 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/12 16:25:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ t_pipe	*setting_up_ins(t_pipe *temp, t_cmd *args)
 		infile = open(temp->path, O_RDONLY);
 		if (infile < 0)
 		{
+			lstclear_pipe(args->pipe, my_free);
+			total_freedom(args);
+			//dont strjoin
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));
 			exit(EXIT_FAILURE);
 		}
@@ -49,6 +52,8 @@ t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args)
 			outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0666);
 		if (outfile < 0)
 		{
+			lstclear_pipe(args->pipe, my_free);
+			total_freedom(args);
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));
 			exit(EXIT_FAILURE);
 		}
@@ -60,3 +65,11 @@ t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args)
 	close(outfile);
 	return (temp);
 }
+
+
+/**
+ 
+ echo 1 > 1 < 1
+ ECHO 
+ * 
+ */
